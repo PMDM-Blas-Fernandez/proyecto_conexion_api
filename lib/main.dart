@@ -1,3 +1,4 @@
+import 'package:conexion_api_tiempo/vistas/informacion_adicional.dart';
 import 'package:conexion_api_tiempo/vistas/tiempo_actual.dart';
 import 'package:flutter/material.dart';
 
@@ -60,7 +61,8 @@ class MainPageState extends State<MainPage> {
           Divider(),
           SizedBox(
             height: 20.0,
-          )
+          ),
+          informacionAdicional("24", "2", "1014", "24.6")
         ],
       ),
     );
