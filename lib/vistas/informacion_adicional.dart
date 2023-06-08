@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-TextStyle textoTitulo =
-    const TextStyle(fontWeight: FontWeight.w600, fontSize: 18.0);
+TextStyle textoTitulo = const TextStyle(fontWeight: FontWeight.w600, fontSize: 18.0);
 
-TextStyle textoInformacion =
-    const TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0);
+TextStyle textoInformacion = const TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0);
 
-Widget informacionAdicional(
-    String viento, String humedad, String presion, String sensacionTermica) {
+Widget informacionAdicional(String viento, String humedad, String presion, String sensacionTermica) {
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(18.0),
@@ -56,7 +53,7 @@ Widget informacionAdicional(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("$humedad", style: textoInformacion),
+                Text("$humedad%", style: textoInformacion),
                 SizedBox(
                   height: 18.0,
                 ),
