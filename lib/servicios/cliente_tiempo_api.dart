@@ -15,7 +15,7 @@ class ClienteTiempoApi {
   }
 
   Future<List<TiempoDia>> getTiempoSemanal(String? ciudad) async {
-    var url = Uri.parse("http://api.openweathermap.org/data/2.5/forecast?q=$ciudad&APPID=cebbc1607826198ffbd6d89586625c48&units=metric&cnt=40");
+    var url = Uri.parse("http://api.openweathermap.org/data/2.5/forecast?q=$ciudad&APPID=cebbc1607826198ffbd6d89586625c48&units=metric");
 
     var respuesta = await http.get(url);
     var body = jsonDecode(respuesta.body);
@@ -23,7 +23,7 @@ class ClienteTiempoApi {
     List<TiempoDia> tiempoSemanal = [];
     var list = body['list'];
 
-    for (var i = 0; i < list.length; i += 8) {
+    for (var i = 1; i < list.length; i++) {
       var item = list[i];
       var tiempoDia = TiempoDia.fromJson(item);
       tiempoSemanal.add(tiempoDia);

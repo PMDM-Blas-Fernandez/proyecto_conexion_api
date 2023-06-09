@@ -8,6 +8,14 @@ Widget informacionAdicional(String viento, String humedad, String presion, Strin
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(18.0),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10.0),
+      gradient: LinearGradient(
+        colors: [Colors.grey[300]!, Colors.grey[500]!],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ),
+    ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -20,7 +28,7 @@ Widget informacionAdicional(String viento, String humedad, String presion, Strin
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Viento", style: textoTitulo),
+                Text("Viento (Km/h)", style: textoTitulo),
                 SizedBox(
                   height: 18.0,
                 ),
@@ -46,7 +54,7 @@ Widget informacionAdicional(String viento, String humedad, String presion, Strin
                 SizedBox(
                   height: 18.0,
                 ),
-                Text("Sensacion Térmica", style: textoTitulo)
+                Text("Sensación", style: textoTitulo)
               ],
             ),
             Column(
@@ -57,7 +65,7 @@ Widget informacionAdicional(String viento, String humedad, String presion, Strin
                 SizedBox(
                   height: 18.0,
                 ),
-                Text("$sensacionTermica", style: textoInformacion)
+                Text("$sensacionTermicaº", style: textoInformacion)
               ],
             ),
           ],

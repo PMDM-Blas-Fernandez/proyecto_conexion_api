@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 Widget tiempoActual(String icono, String temperatura, String ubicacion) {
   return Center(
     child: Container(
+      width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

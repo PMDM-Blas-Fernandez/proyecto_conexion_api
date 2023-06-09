@@ -91,70 +91,76 @@ class MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        title: const Text(
-          "El Tiempo",
-          style: TextStyle(color: Colors.black),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color.fromARGB(255, 167, 212, 255), Color.fromARGB(255, 2, 90, 255)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-          color: Colors.black,
-        ),
-        actions: <Widget>[
-          IconButton(
-            onPressed: _seleccionarCiudad,
-            icon: const Icon(Icons.gps_fixed),
-            color: Colors.black,
-          )
-        ],
       ),
-      body: FutureBuilder(
-        future: getData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done && tiempo != null && tiempoSemanal != null) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                tiempoActual("${tiempo!.icono}", "${tiempo!.temperatura}º", "${tiempo!.nombreCiudad}"),
-                const SizedBox(height: 60.0),
-                const Text(
-                  "Información Adicional",
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          title: const Text(
+            "El Tiempo",
+            style: TextStyle(color: Colors.black),
+          ),
+          actions: <Widget>[
+            IconButton(
+              onPressed: _seleccionarCiudad,
+              icon: const Icon(Icons.gps_fixed),
+              color: Colors.black,
+            )
+          ],
+        ),
+        body: FutureBuilder(
+          future: getData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done && tiempo != null && tiempoSemanal != null) {
+              return Container(
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      tiempoActual("${tiempo!.icono}", "${tiempo!.temperatura}º", "${tiempo!.nombreCiudad}"),
+                      const SizedBox(height: 40.0),
+                      const Text(
+                        "Información Adicional",
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Divider(),
+                      informacionAdicional("${tiempo!.viento}", "${tiempo!.humedad}", "${tiempo!.presion}", "${tiempo!.sensacionTermica}"),
+                      const SizedBox(height: 40.0),
+                      const Text(
+                        "Pronóstico por horas",
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Divider(),
+                      ListaTiempo(tiempoSemanal: tiempoSemanal!),
+                    ],
                   ),
                 ),
-                const Divider(),
-                const SizedBox(height: 20.0),
-                informacionAdicional("${tiempo!.viento}", "${tiempo!.humedad}", "${tiempo!.presion}", "${tiempo!.sensacionTermica}"),
-                const SizedBox(height: 20.0),
-                const Text(
-                  "Próximos 7 días",
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Divider(),
-                const SizedBox(height: 20.0),
-                ListaTiempo(tiempoSemanal: tiempoSemanal!),
-              ],
-            );
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Container();
-        },
+              );
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }
