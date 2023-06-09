@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 
-TextStyle textoTitulo = const TextStyle(fontWeight: FontWeight.w600, fontSize: 18.0);
-
-TextStyle textoInformacion = const TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0);
-
 Widget informacionAdicional(String viento, String humedad, String presion, String sensacionTermica) {
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(18.0),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10.0),
-      gradient: LinearGradient(
-        colors: [Colors.grey[300]!, Colors.grey[500]!],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      ),
+      color: Color.fromARGB(62, 220, 248, 255),
     ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -28,44 +20,44 @@ Widget informacionAdicional(String viento, String humedad, String presion, Strin
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Viento (Km/h)", style: textoTitulo),
+                const Text("Viento (Km/h)", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.0, color: Colors.white)),
                 SizedBox(
                   height: 18.0,
                 ),
-                Text("Presión", style: textoTitulo)
+                Text("Presión", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.0, color: Colors.white))
               ],
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("$viento", style: textoInformacion),
+                Text("$viento", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0, color: Colors.white)),
                 SizedBox(
                   height: 18.0,
                 ),
-                Text("$presion", style: textoInformacion)
+                Text("$presion", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0, color: Colors.white))
               ],
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Humedad", style: textoTitulo),
+                Text("Humedad", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.0, color: Colors.white)),
                 SizedBox(
                   height: 18.0,
                 ),
-                Text("Sensación", style: textoTitulo)
+                Text("Sensación", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.0, color: Colors.white))
               ],
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("$humedad%", style: textoInformacion),
+                Text("$humedad%", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0, color: Colors.white)),
                 SizedBox(
                   height: 18.0,
                 ),
-                Text("$sensacionTermicaº", style: textoInformacion)
+                Text("$sensacionTermicaº", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0, color: Colors.white))
               ],
             ),
           ],

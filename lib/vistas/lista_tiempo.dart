@@ -10,14 +10,10 @@ class ListaTiempo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 140.0,
+      height: 160.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        gradient: LinearGradient(
-          colors: [Colors.grey[500]!, Colors.grey[800]!],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        color: Colors.transparent,
       ),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -29,21 +25,44 @@ class ListaTiempo extends StatelessWidget {
           var horaFormateada = DateFormat('H:mm').format(fechaHora);
           return Container(
             width: 100,
-            margin: EdgeInsets.all(8.0),
+            margin: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
-              color: Colors.white,
+              color: Color.fromARGB(36, 193, 241, 255),
             ),
-            child: Column(
-              children: [
-                Text(fechaFormateada), // Mostrar la fecha formateada
-                Text(horaFormateada), // Mostrar la hora formateada
-                Image.network(
-                  "http://openweathermap.org/img/w/${tiempoDia.icono}.png",
-                ), // Mostrar el icono del clima
-                Text("Máx: ${tiempoDia.temperaturaMax}º"),
-                Text("Mín: ${tiempoDia.temperaturaMin}º"), // Mostrar la temperatura máxima y mínima
-              ],
+            child: Container(
+              margin: EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text(
+                    fechaFormateada,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ), // Mostrar la fecha formateada
+                  Text(
+                    horaFormateada,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ), // Mostrar la hora formateada
+                  Image.network(
+                    "http://openweathermap.org/img/w/${tiempoDia.icono}.png",
+                  ), // Mostrar el icono del clima
+                  Text(
+                    "Máx: ${tiempoDia.temperaturaMax}º",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    "Mín: ${tiempoDia.temperaturaMin}º",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ), // Mostrar la temperatura máxima y mínima
+                ],
+              ),
             ),
           );
         },

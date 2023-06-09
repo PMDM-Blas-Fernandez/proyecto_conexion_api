@@ -106,13 +106,13 @@ class MainPageState extends State<MainPage> {
           elevation: 0.0,
           title: const Text(
             "El Tiempo",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
             IconButton(
               onPressed: _seleccionarCiudad,
               icon: const Icon(Icons.gps_fixed),
-              color: Colors.black,
+              color: Colors.white,
             )
           ],
         ),
@@ -120,36 +120,30 @@ class MainPageState extends State<MainPage> {
           future: getData(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done && tiempo != null && tiempoSemanal != null) {
-              return Container(
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      tiempoActual("${tiempo!.icono}", "${tiempo!.temperatura}º", "${tiempo!.nombreCiudad}"),
-                      const SizedBox(height: 40.0),
-                      const Text(
-                        "Información Adicional",
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
+              return SingleChildScrollView(
+                child: Container(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        tiempoActual("${tiempo!.icono}", "${tiempo!.temperatura}º", "${tiempo!.nombreCiudad}"),
+                        const SizedBox(height: 40.0),
+                        const Divider(),
+                        ListaTiempo(tiempoSemanal: tiempoSemanal!),
+                        const SizedBox(height: 40.0),
+                        const Text(
+                          "Información adicional",
+                          style: TextStyle(
+                            fontSize: 24.0,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const Divider(),
-                      informacionAdicional("${tiempo!.viento}", "${tiempo!.humedad}", "${tiempo!.presion}", "${tiempo!.sensacionTermica}"),
-                      const SizedBox(height: 40.0),
-                      const Text(
-                        "Pronóstico por horas",
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Divider(),
-                      ListaTiempo(tiempoSemanal: tiempoSemanal!),
-                    ],
+                        const Divider(),
+                        informacionAdicional("${tiempo!.viento}", "${tiempo!.humedad}", "${tiempo!.presion}", "${tiempo!.sensacionTermica}"),
+                      ],
+                    ),
                   ),
                 ),
               );

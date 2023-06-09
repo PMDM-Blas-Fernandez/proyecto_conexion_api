@@ -8,25 +8,28 @@ Widget tiempoActual(String icono, String temperatura, String ubicacion) {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.network(
-            "http://openweathermap.org/img/w/$icono.png",
+          Text(
+            ubicacion,
+            style: const TextStyle(fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 10.0,
           ),
-          Text(
-            temperatura,
-            style: const TextStyle(
-              fontSize: 46.0,
+          SizedBox(
+            height: 180,
+            width: 180,
+            child: Image.network(
+              "http://openweathermap.org/img/w/$icono.png",
+              fit: BoxFit.cover,
             ),
           ),
           const SizedBox(
             height: 10.0,
           ),
           Text(
-            ubicacion,
-            style: const TextStyle(fontSize: 18.0, color: Colors.grey),
-          )
+            temperatura + "C",
+            style: const TextStyle(fontSize: 50.0, color: Colors.white, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     ),
