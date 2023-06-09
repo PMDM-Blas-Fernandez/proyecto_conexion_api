@@ -10,7 +10,7 @@ class ListaTiempo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 160.0,
+      height: 190.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: Colors.transparent,
@@ -39,28 +39,31 @@ class ListaTiempo extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                     ),
-                  ), // Mostrar la fecha formateada
+                  ),
                   Text(
                     horaFormateada,
                     style: TextStyle(
                       color: Colors.white,
                     ),
-                  ), // Mostrar la hora formateada
+                  ),
                   Image.network(
                     "http://openweathermap.org/img/w/${tiempoDia.icono}.png",
-                  ), // Mostrar el icono del clima
+                  ),
                   Text(
-                    "Máx: ${tiempoDia.temperaturaMax}º",
+                    "Mín:\n${tiempoDia.temperaturaMin}ºC",
                     style: TextStyle(
                       color: Colors.white,
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
-                    "Mín: ${tiempoDia.temperaturaMin}º",
+                    "Máx:\n${tiempoDia.temperaturaMax}ºC",
                     style: TextStyle(
                       color: Colors.white,
                     ),
-                  ), // Mostrar la temperatura máxima y mínima
+                  ),
                 ],
               ),
             ),

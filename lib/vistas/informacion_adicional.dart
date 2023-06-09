@@ -57,7 +57,7 @@ Widget informacionAdicional(String viento, String humedad, String presion, Strin
                 SizedBox(
                   height: 18.0,
                 ),
-                Text("$sensacionTermicaº", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0, color: Colors.white))
+                Text("$sensacionTermicaºC", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0, color: Colors.white))
               ],
             ),
           ],
