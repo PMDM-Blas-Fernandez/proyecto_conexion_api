@@ -29,68 +29,121 @@ class MainPage extends StatefulWidget {
 class MainPageState extends State<MainPage> {
   ClienteTiempoApi cliente = ClienteTiempoApi();
   Tiempo? tiempo;
+  String ciudad = "Ibi";
 
   Future<void> getData() async {
-    tiempo = await cliente.getTiempoActual("Ibi");
+    tiempo = await cliente.getTiempoActual(ciudad);
+  }
+
+  Future<void> _seleccionarCiudad() async {
+    final ciudadSeleccionada = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Seleccionar Ciudad'),
+          children: <Widget>[
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, 'Madrid');
+              },
+              child: const Text('Madrid'),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, 'Barcelona');
+              },
+              child: const Text('Barcelona'),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, 'Londres');
+              },
+              child: const Text('Londres'),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, 'Ibi');
+              },
+              child: const Text('Ibi'),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, 'Alcoy');
+              },
+              child: const Text('Alcoy'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (ciudadSeleccionada != null) {
+      setState(() {
+        ciudad = ciudadSeleccionada;
+      });
+      await getData();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          title: const Text(
-            "El Tiempo",
-            style: TextStyle(color: Colors.black),
-          ),
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.menu),
-            color: Colors.black,
-          ),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.gps_fixed),
-              color: Colors.black,
-            )
-          ],
+        elevation: 0.0,
+        title: const Text(
+          "El Tiempo",
+          style: TextStyle(color: Colors.black),
         ),
-        body: FutureBuilder(
-            future: getData(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done && tiempo != null) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    tiempoActual("${tiempo!.icono}", "${tiempo!.temperatura}º", "${tiempo!.nombreCiudad}"),
-                    const SizedBox(
-                      height: 60.0,
-                    ),
-                    const Text(
-                      "Información Adicional",
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Divider(),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    informacionAdicional("${tiempo!.viento}", "${tiempo!.humedad}", "${tiempo!.presion}", "${tiempo!.sensacionTermica}")
-                  ],
-                );
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return Container();
-            }));
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.menu),
+          color: Colors.black,
+        ),
+        actions: <Widget>[
+          IconButton(
+            onPressed: _seleccionarCiudad,
+            icon: const Icon(Icons.gps_fixed),
+            color: Colors.black,
+          )
+        ],
+      ),
+      body: FutureBuilder(
+        future: getData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done && tiempo != null) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                tiempoActual("${tiempo!.icono}", "${tiempo!.temperatura}º", "${tiempo!.nombreCiudad}"),
+                const SizedBox(
+                  height: 60.0,
+                ),
+                const Text(
+                  "Información Adicional",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Divider(),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                informacionAdicional("${tiempo!.viento}", "${tiempo!.humedad}", "${tiempo!.presion}", "${tiempo!.sensacionTermica}")
+              ],
+            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Container();
+        },
+      ),
+    );
   }
 }
