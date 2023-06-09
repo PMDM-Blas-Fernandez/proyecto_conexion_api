@@ -1,3 +1,5 @@
+import 'package:conexion_api_tiempo/modelo/modelo_tiempo_dia.dart';
+
 class Tiempo {
   String? nombreCiudad;
   double? temperatura;
