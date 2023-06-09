@@ -48,9 +48,16 @@ class MainPageState extends State<MainPage> {
           centerTitle: true,
           leading: IconButton(
             onPressed: () {},
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             color: Colors.black,
           ),
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.gps_fixed),
+              color: Colors.black,
+            )
+          ],
         ),
         body: FutureBuilder(
             future: getData(),
