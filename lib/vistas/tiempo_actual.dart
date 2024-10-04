@@ -19,7 +19,7 @@ Widget tiempoActual(String icono, String temperatura, String ubicacion) {
             height: 180,
             width: 180,
             child: Image.network(
-              "http://openweathermap.org/img/w/$icono.png",
+              icono,
               fit: BoxFit.cover,
             ),
           ),

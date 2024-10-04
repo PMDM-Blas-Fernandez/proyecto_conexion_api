@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:conexion_api_tiempo/modelo/modelo_tiempo_dia.dart';
+import 'package:flutter_weather_app/models/model_hourly_weather_forecast.dart';
 
 class ListaTiempo extends StatelessWidget {
-  final List<TiempoDia> tiempoSemanal;
+  final List<HourlyWeatherForecast> tiempoSemanal;
 
   const ListaTiempo({super.key, required this.tiempoSemanal});
 
@@ -20,7 +20,7 @@ class ListaTiempo extends StatelessWidget {
         itemCount: tiempoSemanal.length >= 20 ? 20 : tiempoSemanal.length,
         itemBuilder: (context, index) {
           var tiempoDia = tiempoSemanal[index];
-          var fechaHora = DateTime.parse(tiempoDia.fecha.toString());
+          var fechaHora = DateTime.parse(tiempoDia.dataTime.toString());
           var fechaFormateada = DateFormat('E, d MMM').format(fechaHora);
           var horaFormateada = DateFormat('H:mm').format(fechaHora);
           return Container(
@@ -47,10 +47,10 @@ class ListaTiempo extends StatelessWidget {
                     ),
                   ),
                   Image.network(
-                    "${tiempoDia.icono}",
+                    "${tiempoDia.iconLink}",
                   ),
                   Text(
-                    "Mín: ${tiempoDia.temperaturaMin}ºC",
+                    "Mín: ${tiempoDia.maxTemperature}ºC",
                     style: const TextStyle(
                       color: Colors.white,
                     ),
@@ -59,7 +59,7 @@ class ListaTiempo extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    "Máx: ${tiempoDia.temperaturaMax}ºC",
+                    "Máx: ${tiempoDia.minTemperature}ºC",
                     style: const TextStyle(
                       color: Colors.white,
                     ),

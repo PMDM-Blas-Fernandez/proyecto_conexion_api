@@ -1,9 +1,9 @@
-import 'package:conexion_api_tiempo/modelo/modelo_tiempo.dart';
-import 'package:conexion_api_tiempo/modelo/modelo_tiempo_dia.dart';
-import 'package:conexion_api_tiempo/servicios/cliente_tiempo_api.dart';
-import 'package:conexion_api_tiempo/vistas/informacion_adicional.dart';
-import 'package:conexion_api_tiempo/vistas/tiempo_actual.dart';
-import 'package:conexion_api_tiempo/vistas/lista_tiempo.dart';
+import 'package:flutter_weather_app/models/model_current_weather.dart';
+import 'package:flutter_weather_app/models/model_hourly_weather_forecast.dart';
+import 'package:flutter_weather_app/servicios/cliente_tiempo_api.dart';
+import 'package:flutter_weather_app/vistas/informacion_adicional.dart';
+import 'package:flutter_weather_app/vistas/tiempo_actual.dart';
+import 'package:flutter_weather_app/vistas/lista_tiempo.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: MainPage(),
       debugShowCheckedModeBanner: false,
     );
@@ -31,8 +31,8 @@ class MainPage extends StatefulWidget {
 
 class MainPageState extends State<MainPage> {
   ClienteTiempoApi cliente = ClienteTiempoApi();
-  Tiempo? tiempo;
-  List<TiempoDia>? tiempoSemanal;
+  CurrentWeather? tiempo;
+  List<HourlyWeatherForecast>? tiempoSemanal;
   String ciudad = "Ibi";
 
   Future<void> getData() async {
@@ -122,29 +122,27 @@ class MainPageState extends State<MainPage> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done && tiempo != null && tiempoSemanal != null) {
               return SingleChildScrollView(
-                child: Container(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        tiempoActual("${tiempo!.icono}", "${tiempo!.temperatura}º", "${tiempo!.nombreCiudad}"),
-                        const SizedBox(height: 40.0),
-                        const Divider(),
-                        ListaTiempo(tiempoSemanal: tiempoSemanal!),
-                        const SizedBox(height: 40.0),
-                        const Text(
-                          "Información adicional",
-                          style: TextStyle(
-                            fontSize: 24.0,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontWeight: FontWeight.bold,
-                          ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      tiempoActual("${tiempo!.iconLink}", "${tiempo!.temperature}º", "${tiempo!.cityName}"),
+                      const SizedBox(height: 40.0),
+                      const Divider(),
+                      ListaTiempo(tiempoSemanal: tiempoSemanal!),
+                      const SizedBox(height: 40.0),
+                      const Text(
+                        "Información adicional",
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontWeight: FontWeight.bold,
                         ),
-                        const Divider(),
-                        informacionAdicional("${tiempo!.viento}", "${tiempo!.humedad}", "${tiempo!.presion}", "${tiempo!.sensacionTermica}"),
-                      ],
-                    ),
+                      ),
+                      const Divider(),
+                      informacionAdicional("${tiempo!.windSpeed}", "${tiempo!.humidityPercentage}", "${tiempo!.pressure}", "${tiempo!.apparentTemperature}"),
+                    ],
                   ),
                 ),
               );
