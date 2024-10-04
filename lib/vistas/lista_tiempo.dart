@@ -28,39 +28,39 @@ class ListaTiempo extends StatelessWidget {
             margin: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
-              color: Color.fromARGB(36, 193, 241, 255),
+              color: const Color.fromARGB(36, 193, 241, 255),
             ),
             child: Container(
-              margin: EdgeInsets.all(8.0),
+              margin: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   Text(
                     fechaFormateada,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
                   Text(
                     horaFormateada,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
                   Image.network(
-                    "http://openweathermap.org/img/w/${tiempoDia.icono}.png",
+                    "${tiempoDia.icono}",
                   ),
                   Text(
-                    "Mín:\n${tiempoDia.temperaturaMin}ºC",
-                    style: TextStyle(
+                    "Mín: ${tiempoDia.temperaturaMin}ºC",
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
-                    "Máx:\n${tiempoDia.temperaturaMax}ºC",
-                    style: TextStyle(
+                    "Máx: ${tiempoDia.temperaturaMax}ºC",
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),

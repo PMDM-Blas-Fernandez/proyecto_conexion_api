@@ -1,8 +1,6 @@
-import 'package:conexion_api_tiempo/modelo/modelo_tiempo_dia.dart';
-
 class Tiempo {
   String? nombreCiudad;
-  double? temperatura;
+  String? temperatura;
   double? viento;
   int? humedad;
   double? sensacionTermica;
@@ -14,7 +12,7 @@ class Tiempo {
 
   Tiempo.fromJson(Map<String, dynamic> json) {
     nombreCiudad = json["name"];
-    temperatura = json["main"]["temp"];
+    temperatura = json["main"]["temp"].toStringAsFixed(0);
     viento = json["wind"]["speed"];
     presion = json["main"]["pressure"];
     humedad = json["main"]["humidity"];
