@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_weather_app/models/model_hourly_weather_forecast.dart';
 
-class ListaTiempo extends StatelessWidget {
-  final List<HourlyWeatherForecast> tiempoSemanal;
+class WidgetHourlyWeatherForecast extends StatelessWidget {
+  final List<HourlyWeatherForecast> hourlyWeatherForecastList;
 
-  const ListaTiempo({super.key, required this.tiempoSemanal});
+
+  const WidgetHourlyWeatherForecast({
+    super.key,
+    required this.hourlyWeatherForecastList,
+  });
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +22,13 @@ class ListaTiempo extends StatelessWidget {
       ),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: tiempoSemanal.length >= 20 ? 20 : tiempoSemanal.length,
+        itemCount: hourlyWeatherForecastList.length >= 20 ? 20 : hourlyWeatherForecastList.length,
         itemBuilder: (context, index) {
-          var tiempoDia = tiempoSemanal[index];
-          var fechaHora = DateTime.parse(tiempoDia.dataTime.toString());
-          var fechaFormateada = DateFormat('E, d MMM').format(fechaHora);
-          var horaFormateada = DateFormat('H:mm').format(fechaHora);
+          var hourlyWeatherForecast = hourlyWeatherForecastList[index];
+          var dateTime = DateTime.parse(hourlyWeatherForecast.dataTime.toString());
+          var formattedDate = DateFormat('E, d MMM').format(dateTime);
+          var formattedHour = DateFormat('H:mm').format(dateTime);
+
           return Container(
             width: 100,
             margin: const EdgeInsets.all(8.0),
@@ -35,22 +41,22 @@ class ListaTiempo extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    fechaFormateada,
+                    formattedDate,
                     style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
                   Text(
-                    horaFormateada,
+                    formattedHour,
                     style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
                   Image.network(
-                    tiempoDia.iconLink,
+                    hourlyWeatherForecast.iconLink,
                   ),
                   Text(
-                    "Mín: ${tiempoDia.maxTemperature}ºC",
+                    "Min: ${hourlyWeatherForecast.maxTemperature}ºC",
                     style: const TextStyle(
                       color: Colors.white,
                     ),
@@ -59,7 +65,7 @@ class ListaTiempo extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    "Máx: ${tiempoDia.minTemperature}ºC",
+                    "Max: ${hourlyWeatherForecast.minTemperature}ºC",
                     style: const TextStyle(
                       color: Colors.white,
                     ),

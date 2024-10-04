@@ -2,9 +2,9 @@ import 'package:flutter_weather_app/models/model_current_weather.dart';
 import 'package:flutter_weather_app/models/model_hourly_weather_forecast.dart';
 import 'package:flutter_weather_app/repositories/current_weather_repository.dart';
 import 'package:flutter_weather_app/repositories/hourly_weather_forecast_repository.dart';
-import 'package:flutter_weather_app/ui/informacion_adicional.dart';
-import 'package:flutter_weather_app/ui/tiempo_actual.dart';
-import 'package:flutter_weather_app/ui/lista_tiempo.dart';
+import 'package:flutter_weather_app/ui/widget_additional_info.dart';
+import 'package:flutter_weather_app/ui/widget_current_weather.dart';
+import 'package:flutter_weather_app/ui/widget_hourly_weather_forecast.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,23 +31,23 @@ class MainPage extends StatefulWidget {
 }
 
 class MainPageState extends State<MainPage> {
-  CurrentWeatherRepository cliente = CurrentWeatherRepository();
+  CurrentWeatherRepository currentWeatherRepository = CurrentWeatherRepository();
   HourlyWeatherForecastRepository hourlyWeatherForecastRepository = HourlyWeatherForecastRepository();
-  CurrentWeather? tiempo;
-  List<HourlyWeatherForecast>? tiempoSemanal;
-  String ciudad = "Ibi";
+  CurrentWeather? currentWeather;
+  List<HourlyWeatherForecast>? hourlyWeatherForecastList;
+  String location = "Ibi";
 
   Future<void> getData() async {
-    tiempo = await cliente.getCurrentWeather(ciudad);
-    tiempoSemanal = await hourlyWeatherForecastRepository.getHourlyWeatherForecast(ciudad);
+    currentWeather = await currentWeatherRepository.getCurrentWeather(location);
+    hourlyWeatherForecastList = await hourlyWeatherForecastRepository.getHourlyWeatherForecast(location);
   }
 
-  Future<void> _seleccionarCiudad() async {
-    final ciudadSeleccionada = await showDialog<String>(
+  Future<void> _selectLocation() async {
+    final selectedLocation = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: const Text('Seleccionar Ciudad'),
+          title: const Text('Select location'),
           children: <Widget>[
             SimpleDialogOption(
               onPressed: () {
@@ -63,9 +63,9 @@ class MainPageState extends State<MainPage> {
             ),
             SimpleDialogOption(
               onPressed: () {
-                Navigator.pop(context, 'Londres');
+                Navigator.pop(context, 'London');
               },
-              child: const Text('Londres'),
+              child: const Text('London'),
             ),
             SimpleDialogOption(
               onPressed: () {
@@ -84,9 +84,9 @@ class MainPageState extends State<MainPage> {
       },
     );
 
-    if (ciudadSeleccionada != null) {
+    if (selectedLocation != null) {
       setState(() {
-        ciudad = ciudadSeleccionada;
+        location = selectedLocation;
       });
       await getData();
     }
@@ -108,12 +108,12 @@ class MainPageState extends State<MainPage> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           title: const Text(
-            "El Tiempo",
+            "Weather",
             style: TextStyle(color: Colors.white),
           ),
           actions: <Widget>[
             IconButton(
-              onPressed: _seleccionarCiudad,
+              onPressed: _selectLocation,
               icon: const Icon(Icons.gps_fixed),
               color: Colors.white,
             )
@@ -122,20 +122,20 @@ class MainPageState extends State<MainPage> {
         body: FutureBuilder(
           future: getData(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done && tiempo != null && tiempoSemanal != null) {
+            if (snapshot.connectionState == ConnectionState.done && currentWeather != null && hourlyWeatherForecastList != null) {
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      tiempoActual(tiempo!.iconLink, "${tiempo!.temperature}º", tiempo!.cityName),
+                      currentWeatherWidget(currentWeather!.iconLink, "${currentWeather!.temperature}º", currentWeather!.location),
                       const SizedBox(height: 40.0),
                       const Divider(),
-                      ListaTiempo(tiempoSemanal: tiempoSemanal!),
+                      WidgetHourlyWeatherForecast(hourlyWeatherForecastList: hourlyWeatherForecastList!),
                       const SizedBox(height: 40.0),
                       const Text(
-                        "Información adicional",
+                        "Additional Info.",
                         style: TextStyle(
                           fontSize: 24.0,
                           color: Color.fromARGB(255, 255, 255, 255),
@@ -143,7 +143,7 @@ class MainPageState extends State<MainPage> {
                         ),
                       ),
                       const Divider(),
-                      informacionAdicional("${tiempo!.windSpeed}", "${tiempo!.humidityPercentage}", "${tiempo!.pressure}", "${tiempo!.apparentTemperature}"),
+                      additionalInfo("${currentWeather!.windSpeed}", "${currentWeather!.humidityPercentage}", "${currentWeather!.pressure}", "${currentWeather!.apparentTemperature}"),
                     ],
                   ),
                 ),

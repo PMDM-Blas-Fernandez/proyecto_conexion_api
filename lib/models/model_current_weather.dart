@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class CurrentWeather {
-  final String cityName;
+  final String location;
   final String temperature;
   final double windSpeed;
   final int humidityPercentage;
@@ -11,7 +11,7 @@ class CurrentWeather {
 
 
   CurrentWeather({
-    required this.cityName,
+    required this.location,
     required this.temperature,
     required this.windSpeed,
     required this.humidityPercentage,
@@ -24,7 +24,7 @@ class CurrentWeather {
   factory CurrentWeather.fromRawJson(String string) => CurrentWeather.fromJson(json.decode(string));
 
   factory CurrentWeather.fromJson(Map<String, dynamic> json) => CurrentWeather(
-        cityName: json["name"],
+        location: json["name"],
         temperature: json["main"]["temp"].toStringAsFixed(0),
         windSpeed: json["wind"]["speed"],
         pressure: json["main"]["pressure"],
