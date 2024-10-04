@@ -1,9 +1,10 @@
 import 'package:flutter_weather_app/models/model_current_weather.dart';
 import 'package:flutter_weather_app/models/model_hourly_weather_forecast.dart';
-import 'package:flutter_weather_app/servicios/cliente_tiempo_api.dart';
-import 'package:flutter_weather_app/vistas/informacion_adicional.dart';
-import 'package:flutter_weather_app/vistas/tiempo_actual.dart';
-import 'package:flutter_weather_app/vistas/lista_tiempo.dart';
+import 'package:flutter_weather_app/repositories/current_weather_repository.dart';
+import 'package:flutter_weather_app/repositories/hourly_weather_forecast_repository.dart';
+import 'package:flutter_weather_app/ui/informacion_adicional.dart';
+import 'package:flutter_weather_app/ui/tiempo_actual.dart';
+import 'package:flutter_weather_app/ui/lista_tiempo.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -30,14 +31,15 @@ class MainPage extends StatefulWidget {
 }
 
 class MainPageState extends State<MainPage> {
-  ClienteTiempoApi cliente = ClienteTiempoApi();
+  CurrentWeatherRepository cliente = CurrentWeatherRepository();
+  HourlyWeatherForecastRepository hourlyWeatherForecastRepository = HourlyWeatherForecastRepository();
   CurrentWeather? tiempo;
   List<HourlyWeatherForecast>? tiempoSemanal;
   String ciudad = "Ibi";
 
   Future<void> getData() async {
-    tiempo = await cliente.getTiempoActual(ciudad);
-    tiempoSemanal = await cliente.getTiempoSemanal(ciudad);
+    tiempo = await cliente.getCurrentWeather(ciudad);
+    tiempoSemanal = await hourlyWeatherForecastRepository.getHourlyWeatherForecast(ciudad);
   }
 
   Future<void> _seleccionarCiudad() async {
@@ -127,7 +129,7 @@ class MainPageState extends State<MainPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      tiempoActual("${tiempo!.iconLink}", "${tiempo!.temperature}º", "${tiempo!.cityName}"),
+                      tiempoActual(tiempo!.iconLink, "${tiempo!.temperature}º", tiempo!.cityName),
                       const SizedBox(height: 40.0),
                       const Divider(),
                       ListaTiempo(tiempoSemanal: tiempoSemanal!),

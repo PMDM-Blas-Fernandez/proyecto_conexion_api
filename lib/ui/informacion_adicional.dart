@@ -31,11 +31,11 @@ Widget informacionAdicional(String viento, String humedad, String presion, Strin
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("$viento", style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0, color: Colors.white)),
+                Text(viento, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0, color: Colors.white)),
                 const SizedBox(
                   height: 18.0,
                 ),
-                Text("$presion", style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0, color: Colors.white))
+                Text(presion, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18.0, color: Colors.white))
               ],
             ),
             const Column(

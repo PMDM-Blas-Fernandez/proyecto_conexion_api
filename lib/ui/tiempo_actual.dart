@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Widget tiempoActual(String icono, String temperatura, String ubicacion) {
   return Center(
-    child: Container(
+    child: SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,7 +27,7 @@ Widget tiempoActual(String icono, String temperatura, String ubicacion) {
             height: 10.0,
           ),
           Text(
-            temperatura + "C",
+            "${temperatura}C",
             style: const TextStyle(fontSize: 50.0, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ],

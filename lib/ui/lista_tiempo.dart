@@ -47,7 +47,7 @@ class ListaTiempo extends StatelessWidget {
                     ),
                   ),
                   Image.network(
-                    "${tiempoDia.iconLink}",
+                    tiempoDia.iconLink,
                   ),
                   Text(
                     "Mín: ${tiempoDia.maxTemperature}ºC",
