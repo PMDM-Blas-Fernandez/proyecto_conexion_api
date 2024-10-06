@@ -2,15 +2,13 @@ import 'dart:convert';
 
 class HourlyWeatherForecast {
   final String dataTime;
-  final String minTemperature;
-  final String maxTemperature;
+  final String temperature;
   final String iconLink;
 
 
   HourlyWeatherForecast({
     required this.dataTime,
-    required this.minTemperature,
-    required this.maxTemperature,
+    required this.temperature,
     required this.iconLink,
   });
 
@@ -19,8 +17,7 @@ class HourlyWeatherForecast {
 
   factory HourlyWeatherForecast.fromJson(Map<String, dynamic> json) => HourlyWeatherForecast(
         dataTime: json["dt_txt"],
-        minTemperature: json["main"]["temp_max"].toStringAsFixed(0),
-        maxTemperature: json["main"]["temp_min"].toStringAsFixed(0),
+        temperature: json["main"]["temp"].toStringAsFixed(0),
         iconLink: "http://openweathermap.org/img/w/${json["weather"][0]["icon"]}.png",
       );
 }
