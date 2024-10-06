@@ -108,131 +108,138 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
             )
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 80,
-              ),
-              BlocBuilder<CurrentWeatherBloc, CurrentWeatherState>(
-                builder: (BuildContext context, CurrentWeatherState state) {
-                  if (state is CurrentWeatherLoadingState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+        body: RefreshIndicator(
+          onRefresh: () async {
+            context.read<CurrentWeatherBloc>().add(GetCurrentWeatherEvent());
+            context.read<HourlyWeatherForecastBloc>().add(GetHourlyWeatherForecastEvent());
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 80,
+                ),
+                BlocBuilder<CurrentWeatherBloc, CurrentWeatherState>(
+                  builder: (BuildContext context, CurrentWeatherState state) {
+                    if (state is CurrentWeatherLoadingState) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
 
-                  if (state is CurrentWeatherLoadedState) {
-                    CurrentWeather currentWeather = state.currentWeatherItem;
+                    if (state is CurrentWeatherLoadedState) {
+                      CurrentWeather currentWeather = state.currentWeatherItem;
 
-                    return currentWeatherWidget(currentWeather);
-                  }
+                      return currentWeatherWidget(currentWeather);
+                    }
 
-                  if (state is CurrentWeatherLoadingFailedState) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.network_check_rounded,
-                            color: Colors.blueAccent,
-                            size: 40.0,
-                          ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          Text(
-                            state.errorMessage,
-                            style: const TextStyle(color: Colors.redAccent),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
+                    if (state is CurrentWeatherLoadingFailedState) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.network_check_rounded,
+                              color: Colors.blueAccent,
+                              size: 40.0,
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                              state.errorMessage,
+                              style: const TextStyle(color: Colors.redAccent),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
 
-                  return const SizedBox();
-                },
-              ),
-              const SizedBox(height: 100.0),
-              BlocBuilder<HourlyWeatherForecastBloc, HourlyWeatherForecastState>(
-                builder: (BuildContext context, HourlyWeatherForecastState state) {
-                  if (state is HourlyWeatherForecastLoadingState) {
-                    return const CircularProgressIndicator();
-                  }
+                    return const SizedBox();
+                  },
+                ),
+                const SizedBox(height: 100.0),
+                BlocBuilder<HourlyWeatherForecastBloc, HourlyWeatherForecastState>(
+                  builder: (BuildContext context, HourlyWeatherForecastState state) {
+                    if (state is HourlyWeatherForecastLoadingState) {
+                      return const CircularProgressIndicator();
+                    }
 
-                  if (state is HourlyWeatherForecastLoadedState) {
-                    List<HourlyWeatherForecast> hourlyWeatherForecastList = state.hourlyWeatherForecastList;
+                    if (state is HourlyWeatherForecastLoadedState) {
+                      List<HourlyWeatherForecast> hourlyWeatherForecastList = state.hourlyWeatherForecastList;
 
-                    return Container(
-                      margin: const EdgeInsets.all(8.0),
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          const Row(
-                            children: [
-                              SizedBox(width: 4),
-                              Icon(
-                                Icons.access_time_filled_rounded,
-                                color: Colors.white60,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                "Previsión de 24 horas",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18,
+                      return Container(
+                        margin: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            const Row(
+                              children: [
+                                SizedBox(width: 4),
+                                Icon(
+                                  Icons.access_time_filled_rounded,
                                   color: Colors.white60,
                                 ),
-                              ),
-                            ],
-                          ),
-                          WidgetHourlyWeatherForecast(hourlyWeatherForecastList: hourlyWeatherForecastList),
-                        ],
-                      ),
-                    );
-                  }
+                                SizedBox(width: 8),
+                                Text(
+                                  "Previsión de 24 horas",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18,
+                                    color: Colors.white60,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            WidgetHourlyWeatherForecast(hourlyWeatherForecastList: hourlyWeatherForecastList),
+                          ],
+                        ),
+                      );
+                    }
 
-                  if (state is HourlyWeatherForecastEmptyState) {
-                    return const Center(
-                      child: Text(
-                        "No products found",
-                        style: TextStyle(color: Colors.green),
-                      ),
-                    );
-                  }
+                    if (state is HourlyWeatherForecastEmptyState) {
+                      return const Center(
+                        child: Text(
+                          "No products found",
+                          style: TextStyle(color: Colors.green),
+                        ),
+                      );
+                    }
 
-                  if (state is HourlyWeatherForecastLoadingFailedState) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.network_check_rounded,
-                            color: Colors.blueAccent,
-                            size: 40.0,
-                          ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          Text(
-                            state.errorMessage,
-                            style: const TextStyle(color: Colors.redAccent),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
+                    if (state is HourlyWeatherForecastLoadingFailedState) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.network_check_rounded,
+                              color: Colors.blueAccent,
+                              size: 40.0,
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                              state.errorMessage,
+                              style: const TextStyle(color: Colors.redAccent),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
 
-                  return const SizedBox();
-                },
-              ),
-            ],
+                    return const SizedBox();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
