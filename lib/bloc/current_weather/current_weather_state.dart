@@ -15,9 +15,6 @@ class CurrentWeatherLoadedState extends CurrentWeatherState{
   const CurrentWeatherLoadedState({required this.currentWeatherItem});
 
   final CurrentWeather currentWeatherItem;
-
-  @override
-  List<Object> get props => [currentWeatherItem];
 }
 
 class CurrentWeatherLoadingFailedState extends CurrentWeatherState {

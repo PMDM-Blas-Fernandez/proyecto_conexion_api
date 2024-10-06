@@ -23,13 +23,14 @@ Widget currentWeatherWidget(CurrentWeather currentWeather) {
                 height: 10.0,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
                 children: [
                   Text(
                     currentWeather.temperature,
                     style: const TextStyle(
-                      fontSize: 100.0,
+                      fontSize: 120.0,
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),

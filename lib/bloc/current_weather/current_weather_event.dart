@@ -7,5 +7,4 @@ abstract class CurrentWeatherEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetCurrentWeatherEvent extends CurrentWeatherEvent {
-}
+class GetCurrentWeatherEvent extends CurrentWeatherEvent {}
